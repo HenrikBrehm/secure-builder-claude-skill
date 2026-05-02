@@ -6,7 +6,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-8A2BE2.svg)](https://docs.claude.com/en/docs/claude-code)
 [![self-check](https://github.com/HenrikBrehm/secure-builder-claude-skill/actions/workflows/self-check.yml/badge.svg)](https://github.com/HenrikBrehm/secure-builder-claude-skill/actions/workflows/self-check.yml)
-[![Status: stable](https://img.shields.io/badge/status-stable-brightgreen.svg)](#)
 
 ## What it does
 
