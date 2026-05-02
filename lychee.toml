@@ -22,6 +22,9 @@ exclude = [
   "^https?://\\[::1\\]",
   # Repo-relative anchors and same-page references
   "^#",
+  # CHANGELOG forward-references to tags that don't exist yet on the branch
+  "github\\.com/HenrikBrehm/secure-builder-claude-skill/compare/",
+  "github\\.com/HenrikBrehm/secure-builder-claude-skill/releases/tag/",
 ]
 
 # Common transient failures shouldn't block CI.

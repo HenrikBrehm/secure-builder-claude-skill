@@ -1,0 +1,31 @@
+# gitleaks config for the self-check workflow.
+# Inherits the default ruleset; allowlists the obviously-fake credentials
+# inside FAIL examples in reference/* documentation files.
+
+title = "secure-builder gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Documentation FAIL examples — fabricated placeholder secrets"
+paths = [
+  '''reference/02-secrets\.md''',
+  '''reference/03-patterns/auth\.md''',
+  '''reference/03-patterns/injection\.md''',
+  '''reference/03-patterns/uploads\.md''',
+  '''reference/05-project-config\.md''',
+  '''reference/06-docker\.md''',
+  '''reference/09-new-project-flow\.md''',
+  '''reference/10-recommended-files\.md''',
+  '''SKILL\.md''',
+  '''README\.md''',
+  '''CHANGELOG\.md''',
+]
+# Specific obviously-fake credential strings used in FAIL/PASS code blocks.
+stopwords = [
+  "sk-proj-abc123",
+  "secret123",
+  "hunter2",
+  "abcd1234",
+]
