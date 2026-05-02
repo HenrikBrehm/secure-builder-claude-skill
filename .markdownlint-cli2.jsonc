@@ -1,0 +1,32 @@
+// Markdownlint config for the self-check workflow.
+// Tightened to enforce structure (heading style, list style, link format)
+// while accommodating a multi-file skill repo: long prose lines are allowed
+// because reference/* contains FAIL/PASS code blocks; sibling headings
+// repeat across reference files (e.g., every reference file has its own
+// "Rules" section); HTML helpers like <details>/<kbd> are useful for docs.
+{
+  "config": {
+    "default": true,
+    "MD003": { "style": "atx" },
+    "MD004": { "style": "dash" },
+    "MD007": { "indent": 2 },
+    "MD013": false,
+    "MD024": { "siblings_only": true },
+    "MD025": { "front_matter_title": "" },
+    "MD026": { "punctuation": ".,;:!" },
+    "MD033": { "allowed_elements": ["br", "details", "summary", "kbd"] },
+    "MD036": false,
+    "MD041": false,
+    "MD046": false,
+    "MD049": { "style": "underscore" },
+    "MD050": { "style": "asterisk" }
+  },
+  "globs": [
+    "SKILL.md",
+    "reference/**/*.md",
+    "README.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "CHANGELOG.md"
+  ]
+}

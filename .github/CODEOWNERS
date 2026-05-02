@@ -1,4 +1,16 @@
-*                       @HenrikBrehm
-/SKILL.md               @HenrikBrehm
-/.github/               @HenrikBrehm
-/SECURITY.md            @HenrikBrehm
+# Default owner
+*                                    @HenrikBrehm
+
+# Skill content (security-sensitive)
+/SKILL.md                            @HenrikBrehm
+/reference/**                        @HenrikBrehm
+
+# Helper scripts (executed on user machines — review carefully)
+/scripts/**                          @HenrikBrehm
+
+# CI is its own security boundary (per SKILL.md §7)
+/.github/workflows/**                @HenrikBrehm
+/.github/                            @HenrikBrehm
+
+# Vulnerability disclosure policy
+/SECURITY.md                         @HenrikBrehm
