@@ -87,12 +87,30 @@ Run a secret scan on the staged diff. Prefer `gitleaks`:
 gitleaks protect --staged --redact -v
 ```
 
-Or as a fallback grep:
+Or as a fallback grep — two stages, since "match `password`" alone produces too many false positives to be useful and "match only known shapes" misses one-off secrets. Run both:
+
 ```bash
-git diff --cached | grep -iE "(api[_-]?key|secret|password|token|bearer|aws[_-]?(access|secret)|-----BEGIN [A-Z ]*PRIVATE KEY-----)" \
-  && echo "POTENTIAL SECRET FOUND - review before committing" \
+# Stage 1: provider token shapes (low false-positive). Fail loudly.
+git diff --cached | grep -E \
+  "(-----BEGIN [A-Z ]*PRIVATE KEY-----\
+|gh[opsur]_[A-Za-z0-9]{36,}\
+|xox[abprs]-[A-Za-z0-9-]{10,}\
+|(sk|pk|rk)_(live|test)_[A-Za-z0-9]{20,}\
+|AKIA[0-9A-Z]{16}\
+|ASIA[0-9A-Z]{16}\
+|eyJ[A-Za-z0-9_-]{10,}\.eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\
+|hf_[A-Za-z0-9]{30,}\
+|sk-(proj-)?[A-Za-z0-9_-]{20,})" \
+  && { echo "POTENTIAL SECRET (provider token shape) — DO NOT COMMIT"; exit 1; }
+
+# Stage 2: keyword + assignment + non-trivial value (medium false-positive). Review.
+git diff --cached | grep -iE \
+  "(api[_-]?key|secret|password|passwd|token|bearer|aws[_-]?(access|secret))[ \t]*[:=][ \t]*['\"]?[A-Za-z0-9_/+=-]{12,}" \
+  && echo "POTENTIAL SECRET (keyword + assignment) — review before committing" \
   || echo "clean"
 ```
+
+Stage 1 covers GitHub PATs, Slack, Stripe, AWS access/STS keys, JWTs, HuggingFace, OpenAI. Stage 2 catches assignment-style leaks of secrets that don't follow a known shape (`API_KEY = "company-internal-xyz123"`). Neither replaces `gitleaks` — they exist for environments where you can't install it.
 
 If a secret is found:
 1. Unstage it: `git restore --staged <file>`.

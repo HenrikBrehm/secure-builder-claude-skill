@@ -14,7 +14,7 @@ app.get("/docs/:id", async (req, res) => {
 ```ts
 app.get("/docs/:id", requireAuth, async (req, res) => {
   const doc = await db.docs.findOne({ id: req.params.id, ownerId: req.user.id })
-  if (!doc) return res.status(404).end()  // 404, not 403, to avoid leaking existence
+  if (!doc) return res.status(404).end()  // see "404 vs 403" below
   res.json(doc)
 })
 ```
@@ -26,3 +26,12 @@ app.get("/docs/:id", requireAuth, async (req, res) => {
 - Centralize policy via middleware / policy objects. Don't scatter role checks.
 - Admin-only routes: separate router with `requireAdmin`, plus an audit log entry for every action.
 - Beware of "mass assignment" — never spread `req.body` directly into `User.update(...)`. Use an explicit allowlist of writable fields.
+
+## 404 vs 403
+
+There's no universal answer — it's a tradeoff per surface:
+
+- **Return `404`** when the *existence* of the resource is itself sensitive (private documents, other users' profiles in a privacy-sensitive product, anything where "this object exists but isn't yours" leaks something attackers can enumerate).
+- **Return `403`** on internal/admin tools, B2B apps where users legitimately know what objects exist, or any surface where a clear `forbidden` response materially aids debugging for legitimate users. Pair with an audit log entry.
+
+The footgun is **mixing them on the same surface**: if `/docs/:id` returns `404` for non-existent docs and `403` for existing-but-not-yours, the status code itself is an oracle. Pick one per route family and apply it consistently.
