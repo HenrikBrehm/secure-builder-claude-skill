@@ -1,0 +1,25 @@
+# Environments / secrets
+.env
+.env.*
+.envrc
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+secrets.yaml
+credentials.json
+service-account*.json
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Build artifacts (defensive — none expected in a docs repo)
+node_modules/
+dist/
+build/
+__pycache__/
+*.log
