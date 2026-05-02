@@ -10,3 +10,22 @@ trim_trailing_whitespace = true
 
 [*.md]
 trim_trailing_whitespace = false
+
+# Stack overrides — defaults above are JS/TS/YAML/JSON friendly.
+# When the recommended `.editorconfig` is copied into a project of a different
+# stack, these keep it idiomatic instead of fighting `gofmt`, `black`, `rustfmt`.
+
+[*.py]
+indent_size = 4
+
+[*.{go,mod,sum}]
+indent_style = tab
+
+[Makefile]
+indent_style = tab
+
+[*.{rs,java,kt,kts,scala,cs,fs,fsx,php,rb}]
+indent_size = 4
+
+[*.tsv]
+indent_style = tab

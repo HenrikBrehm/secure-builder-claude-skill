@@ -1,0 +1,36 @@
+# Lychee config — skip example/private hosts that appear inside FAIL examples
+# in reference/* code blocks. Real external links still get checked.
+
+# Skip these patterns entirely (regex against URL):
+exclude = [
+  # Example placeholders used in FAIL/PASS code blocks
+  "^postgres://",                      # connection-string examples
+  "db\\.internal",                     # placeholder hostname
+  "@db\\.internal",
+  "secret@",
+  "example\\.com",
+  "example\\.org",
+  "example\\.net",
+  # Local + private + cloud-metadata addresses (called out in SSRF guidance)
+  "^https?://127\\.",
+  "^https?://localhost",
+  "^https?://0\\.0\\.0\\.0",
+  "^https?://10\\.",
+  "^https?://172\\.(1[6-9]|2[0-9]|3[0-1])\\.",
+  "^https?://192\\.168\\.",
+  "^https?://169\\.254\\.",
+  "^https?://\\[::1\\]",
+  # Repo-relative anchors and same-page references
+  "^#",
+  # CHANGELOG forward-references to tags that don't exist yet on the branch
+  "github\\.com/HenrikBrehm/secure-builder-claude-skill/compare/",
+  "github\\.com/HenrikBrehm/secure-builder-claude-skill/releases/tag/",
+]
+
+# Common transient failures shouldn't block CI.
+accept = [200, 206, 301, 302, 304, 308, 403, 429]
+max_concurrency = 4
+max_retries = 2
+timeout = 20
+no_progress = true
+exclude_mail = true
