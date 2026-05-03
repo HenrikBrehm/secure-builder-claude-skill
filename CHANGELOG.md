@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `docs/EVALUATION.md` — independent evaluation of v1.1.0 against seven tests (T1 static checks, T2 OWASP Top 10:2021 coverage, T3 FAIL/PASS correctness, T4 tool/library currency, T5 self-application audit, T6 README scenario walkthroughs, T7 gap analysis). Aggregate grade **A-** as of 2026-05-03 (up from B+ for v1.0.0). Includes prioritized fix list and Appendix A for delta tracking against v1.0.0.
+- `docs/tests/RUNNING.md` — instructions for re-running T1 locally and re-grading T2–T7.
+- "Quality" section in `README.md` linking to the evaluation and showing current grades.
+
+### Notes
+
+- The evaluation flags two minor T1 issues already in v1.1.0: 5 × `MD060/table-column-style` on the reference-map separator rows in `SKILL.md:58` and `README.md:114`, and a stale `exclude_mail = true` field in `lychee.toml` that is invalid in current lychee (renamed to `include_mail` in newer releases). CI is unaffected because `self-check.yml` invokes lychee via CLI args without `--config`. Both are 5-minute fixes deferred to a follow-up PR to keep this evaluation-add scope tight.
+
 ## [1.1.0] — 2026-05-02
 
 Major restructure for context-cost efficiency, plus content modernization

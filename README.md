@@ -136,6 +136,25 @@ The skill itself ([`SKILL.md`](./SKILL.md)) is a thin always-loaded core. Detail
 | 13 | When to pause and ask | [`reference/13-pause-and-ask.md`](./reference/13-pause-and-ask.md) |
 | 14 | Stack quick-reference | [`reference/14-stacks/`](./reference/14-stacks/) (Node, Next.js, FastAPI, Django, Go, Rust, Spring, .NET, Rails) |
 
+## Quality
+
+The skill ships with a real test suite — not just self-promotion. Independent evaluation in [`docs/EVALUATION.md`](./docs/EVALUATION.md).
+
+Current grades (reviewed 2026-05-03 against v1.1.0):
+
+| Test                               | Grade |
+| ---------------------------------- | ----- |
+| T1 Static checks (gitleaks / markdownlint / lychee / semgrep / shellcheck — automated in `self-check.yml`) | B+ |
+| T2 OWASP Top 10:2021 coverage      | A     |
+| T3 FAIL/PASS correctness review    | A-    |
+| T4 Tool / library currency         | B+    |
+| T5 Self-application audit          | A     |
+| T6 Scenario walkthroughs           | A     |
+| T7 Gap analysis                    | B     |
+| **Aggregate**                      | **A-** |
+
+The aggregate sits at A- because (a) three high-impact attack classes are still absent — open redirect, insecure deserialization, SSTI; (b) `crypto.timingSafeEqual` lacks an equal-length precondition note; and (c) `passlib` (Python) hasn't shipped since 2020-10. Two minor T1 findings (5 MD060 lint, 1 stale `lychee.toml` field) are documented as 5-minute fixes. Re-run instructions: [`docs/tests/RUNNING.md`](./docs/tests/RUNNING.md).
+
 ## Contributing
 
 Pull requests welcome. Read [CONTRIBUTING.md](./CONTRIBUTING.md) first.
